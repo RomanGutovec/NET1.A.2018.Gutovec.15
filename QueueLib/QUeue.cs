@@ -122,9 +122,15 @@ namespace QueueLib
         /// <summary>
         /// Removes and returns the object at the beginning of the Queue.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown when queue is empty</exception>
         /// <returns>Object at the beginning of the Queue.</returns>
         public T Dequeue()
         {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("Queue is empty");
+            }
+
             T resultValue = sourceArray[head];
             sourceArray[head] = default(T);
             size--;
@@ -149,9 +155,17 @@ namespace QueueLib
         /// Returns the object at the beginning of the Queue without removing
         /// it.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown when queue is empty</exception>
         /// <returns></returns>
         public T Peek()
-            => sourceArray[head];
+        {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("Queue is empty");
+            }
+
+            return sourceArray[head];
+        }
 
         /// <summary>
         /// Returns true if the queue contains at least one element equal to element in queue.
