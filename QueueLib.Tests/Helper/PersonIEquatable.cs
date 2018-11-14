@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace QueueLib.Tests.Helper
 {
-    class PersonIEquatable: IEquatable<PersonIEquatable>
+    public class PersonIEquatable : IEquatable<PersonIEquatable>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public PersonIEquatable(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
         }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public bool Equals(PersonIEquatable other)
         => other.FirstName == FirstName && other.LastName == LastName;
     }
