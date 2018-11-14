@@ -13,7 +13,7 @@ namespace QueueLib
     /// <typeparam name="T">Type</typeparam>
     public class QUeue<T> : IEnumerable<T>, IEnumerable, ICollection
     {
-        private readonly int startCapasity = 4;
+        private const int startCapasity = 4;
         private T[] sourceArray;
         private int head;
         private int tail;
@@ -30,7 +30,7 @@ namespace QueueLib
         }
 
         /// <summary>
-        /// Initializes a new instance of the Queue class that is empty,
+        /// Initializes a new instance of the queue class that is empty,
         /// has the specified initial capacity.
         /// </summary>
         /// <exception cref="ArgumentException">Thrown when capacity has incorrect value</exception>
