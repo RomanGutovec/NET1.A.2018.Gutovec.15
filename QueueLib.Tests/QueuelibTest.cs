@@ -10,7 +10,7 @@ namespace QueueLib.Tests
         [Test]
         public void ConstructorWithoutparametersTest_CreateInstanceAddElement_CheckDequeueElement()
         {
-            QUeue<int> actualQueue = new QUeue<int>();
+            Queue<int> actualQueue = new Queue<int>();
             actualQueue.Enqueue(1);
             Assert.AreEqual(1, actualQueue.Dequeue());
         }
@@ -21,7 +21,7 @@ namespace QueueLib.Tests
         [TestCase(new int[] { 13, 15, 25, 26, -36, -38, -39, -48, 56, 1050 })]
         public void CtorWhichTakesICollectionTest_InputArrayDifferentLength(int[] sourceArray)
         {
-            QUeue<int> actualQueue = new QUeue<int>(sourceArray);
+            Queue<int> actualQueue = new Queue<int>(sourceArray);
             for (int i = 0; i < sourceArray.Length; i++)
             {
                 Assert.AreEqual(sourceArray[i], actualQueue.Dequeue());
@@ -34,7 +34,7 @@ namespace QueueLib.Tests
         [TestCase(new int[] { 17, 11 })]
         public void EnqueueTest_DifferentValues_AssertInputedValues(int[] sourceArray)
         {
-            QUeue<int> actualQueue = new QUeue<int>();
+            Queue<int> actualQueue = new Queue<int>();
             for (int i = 0; i < sourceArray.Length; i++)
             {
                 actualQueue.Enqueue(sourceArray[i]);
@@ -47,7 +47,7 @@ namespace QueueLib.Tests
 
         public void CopyToTest_DifferentValues_AssertInputedValues(int[] sourceArray)
         {
-            QUeue<int> actualQueue = new QUeue<int>(sourceArray);
+            Queue<int> actualQueue = new Queue<int>(sourceArray);
             actualQueue.Enqueue(5);
             actualQueue.Dequeue();
             actualQueue.Dequeue();
@@ -62,12 +62,12 @@ namespace QueueLib.Tests
         [TestCase(new int[] { 154, 18, 295 }, ExpectedResult = 154)]
         [TestCase(new int[] { 13, 17, 18, 19, 20, 21, 23, 11 }, ExpectedResult = 13)]
         public int PeekTest_DifferentValues_AssertInputedValues(int[] sourceArray)
-            => new QUeue<int>(sourceArray).Peek();
+            => new Queue<int>(sourceArray).Peek();
 
         [TestCase(new int[] { -1, 5, 8 })]
         public void EnumeratorTest_ModifyCollectionWhenIterated_InValidOperationException(int[] sourceArray)
         {
-            QUeue<int> actualQueue = new QUeue<int>(sourceArray);
+            Queue<int> actualQueue = new Queue<int>(sourceArray);
             Assert.Throws<InvalidOperationException>(() =>
             {
                 foreach (var item in actualQueue)
@@ -80,11 +80,11 @@ namespace QueueLib.Tests
         [TestCase(-100)]
         [TestCase(-5)]
         public void ConstructorTest_InputIncorrectData_ArgumentException(int number)
-            => Assert.Throws<ArgumentException>(() => new QUeue<int>(number));
+            => Assert.Throws<ArgumentException>(() => new Queue<int>(number));
 
         [Test]
         public void ConstructorTest_InputIncorrectData_ArgumentNullException()
-            => Assert.Throws<ArgumentNullException>(() => new QUeue<string>().Enqueue(null));
+            => Assert.Throws<ArgumentNullException>(() => new Queue<string>().Enqueue(null));
 
         [Test]
         public void PersonTest_TwoPersonWithDifferentReferences_CompareReferenceEquality()
@@ -93,7 +93,7 @@ namespace QueueLib.Tests
             Person secondPerson = new Person("Ivanov", "Ivan");
             Person thirdPerson = new Person("Ivanov", "Ivan");
 
-            QUeue<Person> personQueue = new QUeue<Person>();
+            Queue<Person> personQueue = new Queue<Person>();
             personQueue.Enqueue(new Person("Ivanov", "Ivan"));
             personQueue.Enqueue(new Person("Ivanov", "Ivan"));
             personQueue.Enqueue(thirdPerson);
@@ -109,7 +109,7 @@ namespace QueueLib.Tests
             PersonIEquatable secondPerson = new PersonIEquatable("Ivanov", "Ivan");
             PersonIEquatable thirdPerson = new PersonIEquatable("Ivanov", "Ivan");
 
-            QUeue<PersonIEquatable> personQueue = new QUeue<PersonIEquatable>();
+            Queue<PersonIEquatable> personQueue = new Queue<PersonIEquatable>();
             personQueue.Enqueue(new PersonIEquatable("Ivanov", "Ivan"));
             personQueue.Enqueue(new PersonIEquatable("Ivanov", "Ivan"));
             personQueue.Enqueue(thirdPerson);
@@ -128,7 +128,7 @@ namespace QueueLib.Tests
             PersonIEquatable secondPerson = new PersonIEquatable("Ivanov", "Ivan");
             PersonIEquatable thirdPerson = new PersonIEquatable("Ivanov", "Ivan");
 
-            QUeue<PersonIEquatable> personQueue = new QUeue<PersonIEquatable>();
+            Queue<PersonIEquatable> personQueue = new Queue<PersonIEquatable>();
             personQueue.Enqueue(new PersonIEquatable("Ivanov", "Ivan"));
             personQueue.Enqueue(new PersonIEquatable("Ivanov", "Ivan"));
             personQueue.Enqueue(thirdPerson);

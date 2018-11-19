@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QueueLib
-{    
+{
     /// <summary>
     /// Represents a first-in, first-out collection of objects. 
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-    public class QUeue<T> : IEnumerable<T>, IEnumerable, ICollection
+    public class Queue<T> : IEnumerable<T>, IEnumerable
     {
         private const int startCapasity = 4;
         private T[] sourceArray;
@@ -24,7 +24,7 @@ namespace QueueLib
         /// Initializes a new instance of the Queue class that is empty,
         /// has the default initial capacity.
         /// </summary>
-        public QUeue()
+        public Queue()
         {
             sourceArray = new T[startCapasity];
         }
@@ -35,7 +35,7 @@ namespace QueueLib
         /// </summary>
         /// <exception cref="ArgumentException">Thrown when capacity has incorrect value</exception>
         /// <param name="capacity">The initial number of elements.</param>
-        public QUeue(int capacity)
+        public Queue(int capacity)
         {
             if (capacity <= 0)
             {
@@ -52,7 +52,7 @@ namespace QueueLib
         /// </summary>
         /// <exception cref="ArgumentNullException">Thrown when collection is null</exception>
         /// <param name="collection">Collection to copy elements from.</param>
-        public QUeue(IEnumerable<T> collection)
+        public Queue(IEnumerable<T> collection)
         {
             if (collection == null)
             {
@@ -68,32 +68,12 @@ namespace QueueLib
         }
 
         /// <summary>
-        /// Returns amount of operation with current queue.
-        /// </summary>
-        public int Version
-        {
-            get { return version; }
-            private set { version = value; }
-        }
-
-        /// <summary>
         /// Returns amount of elements in queue.
         /// </summary>
         public int Count
         {
             get { return size; }
         }
-
-        /// <summary>
-        /// Gets an object that can be used to synchronize access to the System.Collections.Queue.
-        /// </summary>
-        public object SyncRoot => throw new NotImplementedException();
-
-        /// <summary>
-        /// Gets a value indicating whether access to the System.Collections.Queue is synchronized
-        /// (thread safe).
-        /// </summary>
-        public bool IsSynchronized => throw new NotImplementedException();
 
         /// <summary>
         /// Adds an element to the end of the Queue.
@@ -126,7 +106,7 @@ namespace QueueLib
         /// <returns>Object at the beginning of the Queue.</returns>
         public T Dequeue()
         {
-            if (Count == 0)
+            if (IsEmpty())
             {
                 throw new InvalidOperationException("Queue is empty");
             }
@@ -198,14 +178,10 @@ namespace QueueLib
         /// </summary>
         /// <returns>Enumerator that iterates through the Queue.</returns>
         public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        => new Enumerator(this);
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        => new Enumerator(this);
 
         IEnumerator IEnumerable.GetEnumerator()
         => GetEnumerator();
@@ -234,16 +210,19 @@ namespace QueueLib
             resultArray.CopyTo(array, index);
         }
 
+        private bool IsEmpty()
+            => Count == 0;
+
         /// <summary>
         /// Implements an enumerator for a Queue.
         /// </summary>
         public struct Enumerator : IEnumerator<T>, IDisposable, IEnumerator
         {
             private readonly int version;
-            private readonly QUeue<T> collection;
+            private readonly Queue<T> collection;
             private int currentIndex;
-                        
-            public Enumerator(QUeue<T> collection)
+
+            public Enumerator(Queue<T> collection)
             {
                 this.collection = collection;
                 currentIndex = -1;
