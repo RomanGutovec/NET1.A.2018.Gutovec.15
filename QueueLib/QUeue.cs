@@ -14,6 +14,7 @@ namespace QueueLib
     public class Queue<T> : IEnumerable<T>, IEnumerable
     {
         private const int startCapasity = 4;
+        private const int growFactor = 2;
         private T[] sourceArray;
         private int head;
         private int tail;
@@ -89,9 +90,7 @@ namespace QueueLib
 
             if (size >= sourceArray.Length)
             {
-                T[] newSourceArray = new T[sourceArray.Length * 2];
-                sourceArray.CopyTo(newSourceArray, 0);
-                sourceArray = newSourceArray;
+                ChangeCapasity(sourceArray.Length * growFactor);
             }
 
             sourceArray[tail++] = item;
@@ -111,10 +110,15 @@ namespace QueueLib
                 throw new InvalidOperationException("Queue is empty");
             }
 
+            if (sourceArray.Length > size * growFactor)
+            {
+                ChangeCapasity(sourceArray.Length / growFactor);
+            }
+
             T resultValue = sourceArray[head];
             sourceArray[head] = default(T);
             size--;
-            version--;
+            version++;
             head++;
             return resultValue;
         }
@@ -212,6 +216,15 @@ namespace QueueLib
 
         private bool IsEmpty()
             => Count == 0;
+
+        private void ChangeCapasity(int newCapasity)
+        {
+            T[] newSourceArray = new T[newCapasity];
+            Array.Copy(sourceArray, head, newSourceArray, 0, tail - head);
+            sourceArray = newSourceArray;
+            head = 0;
+            tail = size;
+        }
 
         /// <summary>
         /// Implements an enumerator for a Queue.
